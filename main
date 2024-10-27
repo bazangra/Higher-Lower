@@ -1,0 +1,58 @@
+import random
+from art import logo
+from game_data import data
+from art import vs
+import os
+
+print(logo)
+score = 0
+
+def generateA():
+  return random.choice(data)
+
+def generateB():
+  return random.choice(data)
+  
+def compare(guess, item_A, item_B, score):
+  answer = ()
+  if item_A['follower_count'] > item_B['follower_count']:
+    answer = "A"
+    if guess == "A":
+      os.system('clear')
+      print(logo)
+      score += 1
+      print(f"You're right! Current score: {score}.")
+      return score
+    else:
+      os.system('clear')
+      print(logo)
+      print(f"Sorry, that's wrong. Final score: {score}")
+      return -1
+  elif item_B['follower_count'] > item_A['follower_count']:
+    answer = "B"
+    if guess == "B":
+      os.system('clear')
+      print(logo)
+      score += 1
+      print(f"You're right! Current score: {score}.")
+      return score
+    else:
+      os.system('clear')
+      print(logo)
+      print(f"Sorry, that's wrong. Final score: {score}")
+      return -1
+
+item_A = generateA()
+item_B = generateB()
+while item_A == item_B:
+  generateB()
+
+while score != -1:
+  print(f"Compare A: {item_A['name']}, a {item_A['description']}, from {item_A['country']}.")
+  print(f"{vs}\nAgainst B: {item_B['name']}, a {item_B['description']}, from {item_B['country']}.")
+  guess = input("Who has more followers? Type 'A' or 'B': ")
+  score = compare(guess, item_A, item_B, score)
+  item_A = item_B
+  item_B = generateB()
+  while item_A == item_B:
+    generateB()
